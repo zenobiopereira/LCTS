@@ -1,0 +1,11 @@
+{
+  "name": "lambda-calculus",
+  "version": "0.0.1",
+  "description": "Lambda calculus in TS",
+  "main": "lambda.ts",
+  "author": "Zenobio",
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^5.0.4"
+  }
+}
