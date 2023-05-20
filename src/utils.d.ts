@@ -18,14 +18,18 @@ export type SymbolOrFN<T = unknown> = T extends string
   : never;
 
 /** Usage:
-*  type A = UnwrapArgs<'f(x)'>
-*       ^? ['f', 'x']
-*  type B = UnwrapArgs<'f(g(x))'>
-*       ^? ['f', 'g', 'x']
-*  type C = UnwrapArgs<'f(g(x)'>
-*       ^? ['f', 'g', 'x']
-*  type D = UnwrapArgs<''>
-*       ^? []
+ *
+ *  type A = UnwrapArgs<'f(x)'>
+ *       ^? ['f', 'x']
+ *
+ *  type B = UnwrapArgs<'f(g(x))'>
+ *       ^? ['f', 'g', 'x']
+ *
+ *  type C = UnwrapArgs<'f(g(x)'>
+ *       ^? ['f', 'g', 'x']
+ *
+ *  type D = UnwrapArgs<''>
+ *       ^? []
 */
 export type UnwrapArgs<S extends string, Acc extends string[] = []> = S extends `${infer H}${"("}${infer T}${")"}`
   ? H extends ""

@@ -18,14 +18,17 @@ type UniqueDef<Env extends unknown, Df extends unknown> = keyof Exclude<UnwrapDe
   : Env & UnwrapDef<Df>;
 
 /** Usage:
-*  type Env = DefEnv<[ Def<"ID", (_: 'x') => 'x'> ]>
-*        ^? { ID: Lambda<(_: 'x') => 'x'> }
-*
-*  type Env = DefEnv<[
-*        ^? INVALID_ENV
-*     Def<"ID", (_: 'x') => 'x'>,
-*     Def<"ID", (_: 'a') => 'a'>
-*   ]>
+ *
+ *  type Env = DefEnv<[ Def<"ID", (_: 'x') => 'x'> ]>
+ *
+ *        ^? { ID: Lambda<(_: 'x') => 'x'> }
+ *
+ *  type Env = DefEnv<[
+ *
+ *        ^? INVALID_ENV
+ *     Def<"ID", (_: 'x') => 'x'>,
+ *     Def<"ID", (_: 'a') => 'a'>
+ *   ]>
 */
 export type DefEnv<T extends Array<unknown>, BaseEnv = {}> = BaseEnv extends Record<any, unknown>
   ? T extends []
