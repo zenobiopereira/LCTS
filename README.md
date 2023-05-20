@@ -75,3 +75,11 @@ type Expression3 = Exp<Lambda<'f'>, [Exp<Lambda<(_: 'g') => 'h'>, ['i']>]>
     a. **TODO: Alpha-Reduction.**
 
 3. `Env` cannot have two definitions with the same name.
+4. To use something already defined on `Env`, do;
+    ```Typescript
+    type ID = Exp<Lambda<Env["ID"], [<...args>]>.
+    ```
+5. To use something defined on `Env` but on the body, refer to it by it's name.
+    ```typescript
+    type IDOfx = Exp<Lambda<(_: 'x') => 'ID x'>, [<...args>]>.
+    ```
