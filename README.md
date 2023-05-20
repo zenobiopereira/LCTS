@@ -1,8 +1,8 @@
 ## LCTS (Lambda Calculus - Typescript)
 
-- A naive implementation of Lambda Calculus on the Typescript type level to see how much I do understand both TS and LC.
+- A naive implementation of Lambda Calculus on the type level.
 
-- It will have multiple versions every time I think in a possible different way of encoding.
+- It will have multiple versions every time I think in a possible different way of encoding things.
 
 ## Expression to AST
 
@@ -63,3 +63,15 @@ type Expression3 = Exp<Lambda<'f'>, [Exp<Lambda<(_: 'g') => 'h'>, ['i']>]>
 */
 
 ```
+
+## Assumptions and Progress
+
+### Some assumptions and things to keep track.
+
+---
+1. `Lambda` definitions are curried as in λ-calculus and the argument needs to be a `string`.
+2. `Exp`, for now, will not handle functions where multiple arguments have the same name.
+
+    a. **TODO: Alpha-Reduction.**
+
+3. `Env` cannot have two definitions with the same name.
