@@ -2,17 +2,16 @@
 
 The idea here it just to parse a given curried function `Lambda<(_: "x") => 'x'>` or a `Sym<"id">` that's already defined on a given `Env`, reduce this AST and show the AST representation of the reduction.
 
-- The way in which the `Lambda` functions are represented on this project, is inteded for a possible further understanding for anyone that has enough knowledge of Javascript (ES6) syntax and the structural type system that TS implements.
+- `Lambda` functions are represented on this project in a way that intends to be easier for anyone that has enough knowledge of Javascript (ES6) arrow functions syntax.
 
-- The way I've implemented the types contains a bunch of validations that, given a better use of `Generics` could be much more readable and better defined. But again, that would change the initial representation and I didn't want to.
-
+- The way the types are implemented contains a bunch of validations that, given a better use of `Generics` could be much more readable and better defined. But again, that would change the initial representation that I want to follow.
 ---
 
 ## How to Use.
 
 The steps for reduction are the following
 
-1. Create the `Expression`. `Exp<Lambda<Function> | Sym<string>, Arguments[], ?Env>`.
+1. Create the `Expression`. `Exp<Lambda<AF> | Sym<string>, Arguments[], ?Env>`.
 2. Check if the `Expression` is reducible.
 
 ```Typescript
