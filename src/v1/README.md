@@ -2,9 +2,11 @@
 
 The idea here it just to parse a given curried function `Lambda<(_: "x") => 'x'>` or a `Sym<"id">` that's already defined on a given `Env`, reduce this AST and show the AST representation of the reduction.
 
-- `Lambda` functions are represented on this project in a way that intends to be easier for anyone that has enough knowledge of Javascript (ES6) arrow functions syntax.
+- `Lambda` functions are represented on this project in a way that intends to be easier for anyone that has enough knowledge of Javascript(ES6) arrow functions syntax.
 
-- The way the types are implemented contains a bunch of validations that, given a better use of `Generics` could be much more readable and better defined. But again, that would change the initial representation that I want to follow.
+- The way the types are implemented contains a bunch of validations that, given a better use of `Generics` and `MY BRAIN`, could be better implemented. But again, that would change the initial representation that I want to follow, and for now, that's my current point.
+
+- [Tests and link to the monolith implementation on "src/v1/playground.ts"](/src/v1//playground.ts).
 ---
 
 ## How to Use.
@@ -158,8 +160,6 @@ type Expression3 = Exp<Lambda<'f'>, [Exp<Lambda<(_: 'g') => 'h'>, ['i']>]>
 
 2. `Alpha-Reduction` it's not implemented mostly because it will evaluate recursively the arguments when possible and will hit the `irreducible` type if there's any `unknown` bound variable.
 
-   - It's not the best idea but it seems to be working for this version...
-
 3. `Env` cannot have two definitions with the same name. The type will tell you.
 
 4. To use something already defined on `Env`, you can use the definition or the `Sym` with the name.
@@ -176,4 +176,6 @@ type Expression3 = Exp<Lambda<'f'>, [Exp<Lambda<(_: 'g') => 'h'>, ['i']>]>
    type IDOfx = Exp<Lambda<(_: 'x') => 'ID x'>, [<...args>]>.
    ```
 
-6. This is a tentative of solving it through `Normal Order`.
+6. The idea is reducing following the `Normal Order`.
+
+7. All the code was made using the Typescript playground at first, TS v5.1.3.
