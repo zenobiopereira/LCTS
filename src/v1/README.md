@@ -145,37 +145,52 @@ type Expression3 = Exp<Lambda<'f'>, [Exp<Lambda<(_: 'g') => 'h'>, ['i']>]>
  *    readonly [_kind]: 'Irreducible';
  * }
 */
-
 ```
+
+---
+
+## References
+1. [Hotscript.](https://github.com/gvergnaud/hotscript)
+2. [Lambda Calculus](https://en.wikipedia.org/wiki/Lambda_calculus#Normal_forms_and_confluence)
+3. ["LambdaCalc.io" for tests and assertions.](https://lambdacalc.io/)
 
 ---
 
 ## Assumptions and Progress.
 
-### Some assumptions and things to keep track.
+Important assumptions for this version.
 
----
+  1. `Lambda` definitions are curried as in λ-calculus and the argument needs to be a `string`.
 
-1. `Lambda` definitions are curried as in λ-calculus and the argument needs to be a `string`.
+  2. `Alpha-Reduction` it's not implemented mostly because it will evaluate recursively the arguments when possible and will hit the `irreducible` type if there's any `unknown` bound variable.
 
-2. `Alpha-Reduction` it's not implemented mostly because it will evaluate recursively the arguments when possible and will hit the `irreducible` type if there's any `unknown` bound variable.
+  3. Since `Alpha-Reduction` isn't implemented, it follows the assumption that whoever is using it will have different named arguments within the same `Lambda` definition. 
+  ```TS
+    // The following code will behave in a way which might not be what you expect;
+    type ExpT = BetaReduction<Exp<Lambda<(_: "x") => (_: "x") => "x">, [Sym<"a">, Sym<"b">]>>
+    //    ^? { vars: []; body: [Sym<"a">]; args: []; }
 
-3. `Env` cannot have two definitions with the same name. The type will tell you.
+    // To prevent the above behavior, please use different names on the same Lambda definition.
+    type ExpT = BetaReduction<Exp<Lambda<(_: "x") => (_: "xx") => "x xx">, [Sym<"a">, Sym<"b">]>>
+    //    ^? { vars: []; body: [Sym<"a">, Sym<"b">]; args: []; }
+  ```
 
-4. To use something already defined on `Env`, you can use the definition or the `Sym` with the name.
-   ```Typescript
-   type ID = Exp<Lambda<Env["ID"], [<...args>]>.
-   type ID2 = Exp<Sym<"ID">, [<...args>]>.
-   type ID3 = Exp<Sym<"iD">, [<...args>]>.
-   type ID4 = Exp<Sym<"id">, [<...args>]>.
-   type ID5 = Exp<Sym<"Id">, [<...args>]>.
-   ```
-5. To use something defined on `Env` but on the body, refer to it by it's name.
+  4. `Env` cannot have two definitions with the same name. The type will tell you.
 
-   ```typescript
-   type IDOfx = Exp<Lambda<(_: 'x') => 'ID x'>, [<...args>]>.
-   ```
+  5. To use something already defined on `Env`, you can use the definition or the `Sym` with the name.
+  ```TS
+  type ID = Exp<Lambda<Env["ID"], [<...args>]>.
+  type ID2 = Exp<Sym<"ID">, [<...args>]>.
+  type ID3 = Exp<Sym<"iD">, [<...args>]>.
+  type ID4 = Exp<Sym<"id">, [<...args>]>.
+  type ID5 = Exp<Sym<"Id">, [<...args>]>.
+  ```
+  6. To use something defined on `Env` but on the body, refer to it by it's name.
 
-6. The idea is reducing following the `Normal Order`.
+  ```TS
+  type IDOfx = Exp<Lambda<(_: 'x') => 'ID x'>, [<...args>]>.
+  ```
 
-7. All the code was made using the Typescript playground at first, TS v5.1.3.
+  7. The idea is reducing following the `Normal Order`.
+
+  8. All the code was made using the Typescript playground at first, TS v5.1.3.
